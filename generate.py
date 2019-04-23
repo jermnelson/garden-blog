@@ -24,8 +24,8 @@ for year in years:
         with open(os.path.abspath(f"posts/{year}/{post}")) as fo:
             post_html = markdown.markdown(fo.read())
             post_soup = BeautifulSoup(post_html)
-            print(post_soup)
-            #for element in post_soup.body:
+            for element in post_soup.find('body').children:
+                print(element)
             #    postings.append(element)
         postings.append(index.new_tag("hr"))
 #print(index)
