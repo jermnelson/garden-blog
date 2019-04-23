@@ -11,6 +11,10 @@ with open("index-template.html") as fo:
 
 postings = index.find("div", class_="postings")
 latest = index.find("ul", class_="latest")
+footer = index.find("footer")
+timestamp = index.new_tag("span")
+timestamp.string = f"Last updated on {datetime.datetime.utcnow().isoformat()}"
+footer.append(timestamp)
 years_walk = next(os.walk(os.path.abspath("posts/")))
 years = years_walk[1]
 for year in years:

@@ -13,8 +13,15 @@ footer {
 
 .blog-post {
   background-color: white;
+  border-radius: 2px;
   padding: .5em;
   margin: 1em;
+}
+
+.latest {
+  background-color: white;
+  border-radius: 2px;
+  margin-right: 1em;
 }
 
 .wrapper {
