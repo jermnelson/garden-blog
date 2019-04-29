@@ -19,8 +19,8 @@ years_walk = next(os.walk(os.path.abspath("posts/")))
 years = years_walk[1]
 for year in years:
     posts_walk = next(os.walk(os.path.abspath(f"posts/{year}")))
-    posts = posts_walk[-1]
-    for post in posts:
+    posts = sorted(posts_walk[-1])
+    for post in reversed(posts):
         div_container = index.new_tag("div")
         div_container['class'] = "blog-post"
         blog_ident = f"{year}/{post[0:5]}"
