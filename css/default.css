@@ -11,6 +11,15 @@ footer {
  padding: .5em;
 }
 
+h1.title {
+ font-size: 4em;
+ margin-left: .75em;
+}
+
+h2.subtitle {
+ margin-left: 2em;
+}
+
 .blog-post {
   background-color: white;
   border-radius: 2px;
@@ -18,10 +27,18 @@ footer {
   margin: 1em;
 }
 
+.about {
+  background-color: white;
+  border-radius: 2px;
+  margin-right: 1em;
+  width: 80%;
+}
+
 .latest {
   background-color: white;
   border-radius: 2px;
   margin-right: 1em;
+  width: 80%;
 }
 
 .wrapper {
