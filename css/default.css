@@ -1,6 +1,12 @@
+@font-face {
+ font-family: NationalPark-Regular;
+ src: url("NationalPark-Regular.otf") format("opentype");
+
+}
+
 body {
   background-color: rgb(153, 255, 153);
-  font-family: 'Zilla Slab', serif;
+  font-family: 'NationalPark-Regular', serif;
 }
 
 footer {
