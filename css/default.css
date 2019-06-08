@@ -1,29 +1,53 @@
 @font-face {
  font-family: NationalPark-Regular;
  src: url("NationalPark-Regular.otf") format("opentype");
-
 }
 
+
 body {
-  background-color: rgb(153, 255, 153);
+  background-color: #739269;
   font-family: 'NationalPark-Regular', serif;
 }
 
-footer {
- background-color: white;
- border-radius: 2px;
- margin-left: 2em;
- margin-right: 2em;
- padding: .5em;
+div.title {
+  background-color: #d4ba97;
+  background-image: url("../img/wood-background.png");
+  border: 2px solid black;
+  border-radius: 25px;
+  color: white;
+  width: 70%;
 }
 
 h1.title {
  font-size: 4em;
  margin-left: .75em;
+ text-shadow: 0px 2px 3px rgba(255,255,255,0.5);
+  -webkit-background-clip: text;
+     -moz-background-clip: text;
+          background-clip: text;
 }
 
 h2.subtitle {
  margin-left: 2em;
+}
+
+h3.post-listing {
+ background-image: url("../img/wood-background.png");
+ border: 2px solid black;
+ border-radius: 5px;
+ color: white;
+ padding: .5em;
+ text-align: center;
+ width: 85%;
+}
+
+footer {
+ background-image: url("../img/wood-background.png");
+ border: 2px solid black;
+ border-radius: 5px;
+ color: white;
+ padding: .5em;
+ width: 90%;
 }
 
 .blog-post {
