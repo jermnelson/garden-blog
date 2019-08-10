@@ -7,12 +7,20 @@ from bs4 import BeautifulSoup
 import xml.etree.ElementTree as etree
 import markdown
 
+BLOG_URI = "https://jermnelson.github.io/garden-blog/"
+
 with open("index-template.html") as fo:
     index = BeautifulSoup(fo)
 
 
 rss_xml = etree.fromstring("""<rss version="2.0" />""")
-#rss = rss_xml.getroot()
+channel = etree.SubElement(rss_xml, "channel")
+link = etree.SubElement(channel, "link")
+link.text = BLOG_URI
+title = etree.SubElement(channel, "title")
+title.text = "Garden Reflections"
+description = etree.SubElement(channel, "description")
+description.text = "A blog by Jeremy Nelson"
 postings = index.find("div", class_="postings")
 latest = index.find("ul", class_="latest")
 footer = index.find("footer")
@@ -26,12 +34,15 @@ for year in years:
     posts_walk = next(os.walk(os.path.abspath(f"posts/{year}")))
     posts = sorted(posts_walk[-1])
     for post in reversed(posts):
-        item = etree.SubElement(rss_xml, 'item')
+        item = etree.SubElement(channel, 'item')
+
         if post.endswith(".swp"):
             continue
         div_container = index.new_tag("div")
         div_container['class'] = "blog-post"
         blog_ident = f"{year}/{post[0:5]}"
+        link = etree.SubElement(item, "link")
+        link.text = f"{BLOG_URI}#{blog_ident}"
         blog_label = f"{post[0:5]}-{year}"
         pubDate = etree.SubElement(item,'pubDate')
         pubDate.text = f"{year}-{post[0:5]}"
