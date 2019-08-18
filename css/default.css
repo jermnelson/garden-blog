@@ -15,7 +15,7 @@ div.title {
   border: 2px solid black;
   border-radius: 25px;
   color: white;
-  width: 70%;
+  width: 85%;
 }
 
 h1.title {
@@ -75,4 +75,5 @@ footer {
  display: grid;
  grid-template-columns: 70% 30%;
  grid-gap: 2em;
+ width: 100%;
 }

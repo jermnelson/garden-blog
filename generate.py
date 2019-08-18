@@ -33,17 +33,20 @@ years = years_walk[1]
 for year in years:
     posts_walk = next(os.walk(os.path.abspath(f"posts/{year}")))
     posts = sorted(posts_walk[-1])
-    for post in reversed(posts):
-        item = etree.SubElement(channel, 'item')
-
+    for post in reversed(posts):        
         if post.endswith(".swp"):
             continue
+        item = etree.SubElement(channel, 'item')
+        author = etree.SubElement(channel, 'author')
+        author.text = "jermnelson@gmail.com"
         div_container = index.new_tag("div")
         div_container['class'] = "blog-post"
         blog_ident = f"{year}/{post[0:5]}"
         link = etree.SubElement(item, "link")
         link.text = f"{BLOG_URI}#{blog_ident}"
+        blog_date = datetime.datetime.st
         blog_label = f"{post[0:5]}-{year}"
+        
         pubDate = etree.SubElement(item,'pubDate')
         pubDate.text = f"{year}-{post[0:5]}"
         blog_date = index.new_tag("h2", id=blog_ident)
@@ -61,6 +64,7 @@ for year in years:
             body = post_soup.find('body')
             div_container.append(body)
             title = etree.SubElement(item, "title")
+            # description = etree.SubElement(item, "description")
             h1 = body.find('h1')
             title.text = h1.string
         postings.append(div_container)
