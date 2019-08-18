@@ -44,7 +44,7 @@ for year in years:
         blog_ident = f"{year}/{post[0:5]}"
         link = etree.SubElement(item, "link")
         link.text = f"{BLOG_URI}#{blog_ident}"
-        blog_date = datetime.datetime.st
+        blog_date = datetime.datetime.strptime(blog_ident, "%Y/%m-%d")
         blog_label = f"{post[0:5]}-{year}"
         
         pubDate = etree.SubElement(item,'pubDate')
