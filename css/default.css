@@ -64,6 +64,13 @@ footer {
   width: 80%;
 }
 
+.grid-two-columns {
+  display: grid;
+  grid-gap: .5em;
+  grid-template-columns: 50% 50%;
+  margin: .25em;
+}
+
 .latest {
   background-color: white;
   border-radius: 2px;
