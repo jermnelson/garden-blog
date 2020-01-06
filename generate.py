@@ -10,8 +10,8 @@ import markdown
 BLOG_URI = "https://jermnelson.github.io/garden-blog/"
 
 with open("index-template.html") as fo:
-    index = BeautifulSoup(fo)
-
+    template = fo.read()
+    index = BeautifulSoup(template, features="html.parser")
 
 rss_xml = etree.fromstring("""<rss version="2.0" />""")
 channel = etree.SubElement(rss_xml, "channel")
@@ -58,15 +58,26 @@ for year in years:
         li_blog.append(li_blog_a)
         latest.append(li_blog)
         div_container.append(blog_date)
-        with open(os.path.abspath(f"posts/{year}/{post}")) as fo:
+        post_path = os.path.abspath(f"posts/{year}/{post}") 
+        with open(post_path) as fo:
             post_html = markdown.markdown(fo.read())
-            post_soup = BeautifulSoup(post_html)
-            body = post_soup.find('body')
-            div_container.append(body)
-            title = etree.SubElement(item, "title")
-            # description = etree.SubElement(item, "description")
+        post_soup = BeautifulSoup(post_html, features="html.parser")
+        body = post_soup.find('body')
+        if body is None:
+            h1 = post_soup.find('h1')
+        else:
             h1 = body.find('h1')
-            title.text = h1.string
+        title = etree.SubElement(item, "title")
+        title.text = h1.string
+        #breakpoint()
+        if body is None:
+            copy_soup = post_soup
+            div_container.append(copy_soup)
+        else:
+            div_container.append(body)
+        
+        # description = etree.SubElement(item, "description")
+        
         postings.append(div_container)
 with open("rss.xml", "wb+") as fo:
    fo.write(etree.tostring(rss_xml)) 
