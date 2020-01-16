@@ -30,7 +30,7 @@ timestamp.string = f"Last updated on {published_now.isoformat()}"
 footer.append(timestamp)
 years_walk = next(os.walk(os.path.abspath("posts/")))
 years = years_walk[1]
-for year in years:
+for year in sorted(years, reverse=True):
     posts_walk = next(os.walk(os.path.abspath(f"posts/{year}")))
     posts = sorted(posts_walk[-1])
     for post in reversed(posts):        
