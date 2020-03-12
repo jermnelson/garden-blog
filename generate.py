@@ -79,6 +79,7 @@ for year in sorted(years, reverse=True):
         # description = etree.SubElement(item, "description")
         
         postings.append(div_container)
+
 with open("rss.xml", "wb+") as fo:
    fo.write(etree.tostring(rss_xml)) 
     
