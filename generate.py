@@ -2,6 +2,7 @@ __author__ = "Jeremy Nelson"
 
 import datetime
 import os
+import pathlib
 
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree as etree
@@ -9,10 +10,41 @@ import markdown
 
 BLOG_URI = "https://jermnelson.github.io/garden-blog/"
 
-with open("index-template.html") as fo:
-    template = fo.read()
-    index = BeautifulSoup(template, features="html.parser")
+def absolute_urls(elements):
+    for element in elements:
+        element['src'] = f"{BLOG_URI}{element['src']}"
 
+def get_post_md(year, post_file):
+    post_path = os.path.abspath(f"posts/{year}/{post_file}") 
+    with open(post_path) as fo:
+        post_html = markdown.markdown(fo.read())
+    return post_html
+
+def get_html_template():
+    with open("index-template.html") as fo:
+        template = fo.read()
+    return BeautifulSoup(template, features="html.parser")
+
+def create_post_html(year, month, day, post_file):
+    post_path = pathlib.Path(f"{year:05d}/{month:02}/{day:02}/index.html")
+    if post_path.exists():
+        return
+    post_date = datetime.datetime(year, month, day)
+    html_page = get_html_template()
+    page_soup = BeautifulSoup(html_page, features="html.parser")
+    post_html = get_post_md(year, post_file)
+    post_soup = BeautifulSoup(post_html, features="html.parser")
+    absolute_urls(post_soup.find_all('img'))
+    absolute_urls(post_soup.find_all('source'))
+    h1_title = page_soup.find("h1", "title")
+    h1_title.string = f"""{h1_title.text.strip()} - {post.strftime("%b %d, %Y")}"""
+    wrapper = page_html.find("div", "wrapper")
+    postings = wrapper.find("div", "postings")
+    postings.append(post_soup)
+
+
+
+index = get_html_template()
 rss_xml = etree.fromstring("""<rss version="2.0" />""")
 channel = etree.SubElement(rss_xml, "channel")
 link = etree.SubElement(channel, "link")
@@ -58,9 +90,7 @@ for year in sorted(years, reverse=True):
         li_blog.append(li_blog_a)
         latest.append(li_blog)
         div_container.append(blog_date)
-        post_path = os.path.abspath(f"posts/{year}/{post}") 
-        with open(post_path) as fo:
-            post_html = markdown.markdown(fo.read())
+        post_html = get_post_md(year, post)
         post_soup = BeautifulSoup(post_html, features="html.parser")
         body = post_soup.find('body')
         if body is None:
