@@ -38,7 +38,7 @@ def create_post_html(year, month, day, post_file):
     absolute_urls(post_soup.find_all('source'))
     h1_title = page_soup.find("h1", "title")
     h1_title.string = f"""{h1_title.text.strip()} - {post.strftime("%b %d, %Y")}"""
-    wrapper = page_html.find("div", "wrapper")
+    wrapper = html_page.find("div", "wrapper")
     postings = wrapper.find("div", "postings")
     postings.append(post_soup)
 
