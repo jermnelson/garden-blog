@@ -1,5 +1,6 @@
 __author__ = "Jeremy Nelson"
 
+import copy
 import datetime
 import os
 import pathlib
@@ -101,13 +102,12 @@ for year in sorted(years, reverse=True):
         title.text = h1.string
         #breakpoint()
         if body is None:
-            copy_soup = post_soup
+            copy_soup = copy.deepcopy(post_soup)
+            item.append(etree.fromstring(f"<description>{copy_soup}</description>"))
             div_container.append(copy_soup)
         else:
             div_container.append(body)
-        
-        # description = etree.SubElement(item, "description")
-        
+            item.append(etree.fromstring(f"<description>{body}</description>"))
         postings.append(div_container)
 
 with open("rss.xml", "wb+") as fo:
