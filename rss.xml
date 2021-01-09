@@ -1,11 +1,23 @@
-<rss version="2.0"><channel><link>https://jermnelson.github.io/garden-blog/</link><title>Garden Reflections</title><description>A blog by Jeremy Nelson</description><item><link>https://jermnelson.github.io/garden-blog/#2020/12-26</link><pubDate>2020-12-26</pubDate><title>Seed Sprouter Notebook and Data</title><description><h1>Seed Sprouter Notebook and Data</h1>
+<rss version="2.0"><channel><link>https://jermnelson.github.io/garden-blog/</link><title>Garden Reflections</title><description>A blog by Jeremy Nelson</description><item><link>https://jermnelson.github.io/garden-blog/#2021/01-09</link><pubDate>2021-01-09</pubDate><title>Sprouts Starting in the New Year</title><description><h1>Sprouts Starting in the New Year</h1>
+<p>Today's snow started earlier in the day and continues. Before I left for Aikido 
+class, I went out to the garage, picked up the sprouts trays from the garden grow 
+hub, and watered them in the kitchen sink. Since I started back to work last Monday,
+I haven't been able to record the watering like I was intending in the
+Jupyter notebook but both the Alfalfa and the Red Clover seeds started sprouting.</p>
+<p>The garage isn't heated and so the growth of the sprouts are stunted; however,
+I think the next purchase for the garden grow hub will be a heating mat. I took
+the following photo from the top and you can see the Alfalfa seeds starting to 
+sprout.</p>
+<p><img alt="Seed Sprouting" src="img/02021-01-09_alfalfa-sprouts.png" /></p>
+<p>The grow of new life (even with these sprouts) is an appropriate as I start the next
+year of my life.</p></description></item><author>jermnelson@gmail.com</author><item><link>https://jermnelson.github.io/garden-blog/#2020/12-26</link><pubDate>2020-12-26</pubDate><title>Seed Sprouter Notebook and Data</title><description><h1>Seed Sprouter Notebook and Data</h1>
 <p>I started the over-night soak for both Red Clover and Alfalfa seeds that
 I'll transfer to the first layer in the Seed Sprouter I purchased earlier
 in the week. I started a <a href="https://github.com/jermnelson/garden-blog/blob/main/nb/seed-sprouter.ipynb">Jupyter notebook</a> to manage the <a href="js/seed-sprouter.json">data</a> 
 I'm collecting to track the full-growth cycle for sprouting seeds to harvesting 
 for two different seeds. My plan is to start the second layer after the 
 first of the year.  </p>
-<p>Here is the current set-up for the seeds being soaked in the Garden Garden
+<p>Here is the current set-up for the seeds being soaked in the Garden Grow
 hub:</p>
 <p><img alt="Seeds on overnight soak" src="img/02020-12-26_seeds-sprouter-soak.png" /></p></description></item><author>jermnelson@gmail.com</author><item><link>https://jermnelson.github.io/garden-blog/#2020/12-22</link><pubDate>2020-12-22</pubDate><title>Garage Gardening Hub</title><description><h1>Garage Gardening Hub</h1>
 <p>Two new additions to the my garage indoor growing hub, mentioned
