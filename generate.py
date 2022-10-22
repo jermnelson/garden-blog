@@ -76,7 +76,7 @@ for year in sorted(years, reverse=True):
         div_container['class'] = "blog-post"
         blog_ident = f"{year}/{post[0:5]}"
         link = etree.SubElement(item, "link")
-        link.text = f"{BLOG_URI}#{blog_ident}"
+        link.text = f"{BLOG_URI}/{blog_ident}.html"
         blog_date = datetime.datetime.strptime(blog_ident, "0%Y/%m-%d")
         blog_label = f"{post[0:5]}-{year}"
         
