@@ -94,6 +94,7 @@ for year in sorted(years, reverse=True):
         post_html = get_post_md(year, post)
         post_soup = BeautifulSoup(post_html, features="html.parser")
         body = post_soup.find('body')
+        #breakpoint()
         if body is None:
             h1 = post_soup.find('h1')
         else:
