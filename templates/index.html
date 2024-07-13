@@ -3,11 +3,13 @@
  <head>
   <meta charset="utf-8"/>
   <title>
-   Garden Reflection Blog -- by Jeremy Nelson
+   Garden Reflections Blog -- by Jeremy Nelson
+   {% block more_title %}{{ page.title }}{% endblock %}
   </title>
   <meta content="Garden musings and reflections on gardening." name="description"/>
   <meta content="Jeremy Nelson" name="author"/>
   <link href="css/default.css" rel="stylesheet"/>
+  {% block add_meta %} {% endblock %}
  </head>
  <body>
   <div class="title">
@@ -17,15 +19,24 @@
   </div>
   <div class="wrapper">
    <div class="postings">
+    {% for post in postings %}
+      <article id="{{ post.href }}">
+       <h1 role="title">{{post.title}} - {{post.date}}</h1>
+      {{ post.html|safe }}
+      </article>
+    {% endfor %}
    </div>
    <div class="listing">
      <h3 class="post-listing">Latest</h3>
      <ul class="latest">
     </ul>
   </div>
+   <div class="listing">
+
+   </div>
   </div>
   <footer>
-   Jeremy Nelson ©2019, 2020
+   Jeremy Nelson ©02019, 02020, 02021, 02022 
   </footer>
  </body>
 </html>

@@ -5,33 +5,90 @@ import datetime
 import os
 import pathlib
 
-from bs4 import BeautifulSoup
+import jinja2
 import xml.etree.ElementTree as etree
 import markdown
 
+from bs4 import BeautifulSoup
+
 BLOG_URI = "https://jermnelson.github.io/garden-blog/"
+
+
+env = jinja2.Environment(
+    loader=jinja2.FileSystemLoader("templates"),
+    autoescape=jinja2.select_autoescape()
+)
 
 def absolute_urls(elements):
     for element in elements:
         element['src'] = f"{BLOG_URI}{element['src']}"
 
-def get_post_md(year, post_file):
-    post_path = pathlib.Path(f"posts/{year}/{post_file}") 
-    with open(post_path) as fo:
+def generate_year_page(year: pathlib.Path):
+    for post in year.glob("*.md"):
+        print(post.name)
+        month_template = env.get_template("index.html")
+        generate_month_page(month)
+       
+
+        month, day = post.name.split(".")[0].split("-")
+        print(f"Month {month}, Day {day}")
+        if (month / ".html").exists():
+            continue
+        generate_month_page(month)
+
+def generate_post(post: pathlib.Path):
+    if post.exists(): # and Github commit hasn't changed
+        return
+    with post_path.open() as fo:
         post_html = markdown.markdown(fo.read())
-    return post_html
+    with post_path.open('w+') as fo:
+        fo.write(post_html)
+
+def generate_years(years: list):
+    for year in years:
+        year_page, month_page = year / f"{year.name}.html", []
+        generate_year_page(year)
+        if not year_page.exists():
+            print(f"{year}.html does not exist")
+            continue  # Need to check for month pages
+        print(year_page)
 
 def get_html_template():
-    with open("index-template.html") as fo:
-        template = fo.read()
-    return BeautifulSoup(template, features="html.parser")
+    return
+    #with open("index-template.html") as fo:
+    #    template = fo.read()
+    #return BeautifulSoup(template, features="html.parser")
 
-def create_post_html(year, month, day, post_file):
-    post_path = pathlib.Path(f"{year:05d}/{month:02}/{day:02}/index.html")
+def create_post_html(**kwargs):
+    post: pathlib.Path = kwargs['post']
+    year: str = kwargs["year"]
+    month: str = kwargs["month"]
+    day: kwargs["day"]
+
+    if post.exists():
+        return
+
+    with post.open() as fo:
+        post_html = markdown.markdown(fo.read())
+ 
+    post_path = pathlib.Path(f"0{year:05d}/{month:02}/{day:02}/index.html")
+    post_path.mkdir(exists=True)
     if post_path.exists():
         return
     post_date = datetime.datetime(year, month, day)
-    html_page = get_html_template()
+    post_template = env.get_template("index.html")
+
+    with post_path.open("w+") as fo:
+        fo.write(
+            post_template.render(
+              page={"title":  f"""{h1_title.text.strip()} - {post.strftime("%b %d, %Y")}""",
+                    "posts": [{ "href": f"{BLOG_URI}{post_path}",
+                                "date": post_date.strftime("%b %d, %Y"),
+                                "html": post_html }]}
+            )
+        )
+
+    return
     page_soup = BeautifulSoup(html_page, features="html.parser")
     post_html = get_post_md(year, post_file)
     post_soup = BeautifulSoup(post_html, features="html.parser")
@@ -43,7 +100,14 @@ def create_post_html(year, month, day, post_file):
     postings = wrapper.find("div", "postings")
     postings.append(post_soup)
 
-
+def year_blog(years: list):
+    for year in years:
+        year_page, month_page = year / f"{year.name}.html", []
+        generate_year_page(year)
+        if not year_page.exists():
+            print(f"{year}.html does not exist")
+            continue  # Need to check for month pages
+        print(year_page)
 
 index = get_html_template()
 rss_xml = etree.fromstring("""<rss version="2.0" />""")
@@ -54,65 +118,20 @@ title = etree.SubElement(channel, "title")
 title.text = "Garden Reflections"
 description = etree.SubElement(channel, "description")
 description.text = "A blog by Jeremy Nelson"
-postings = index.find("div", class_="postings")
-latest = index.find("ul", class_="latest")
-footer = index.find("footer")
-timestamp = index.new_tag("span")
+#postings = index.find("div", class_="postings")
+#latest = index.find("ul", class_="latest")
+#footer = index.find("footer")
+#timestamp = index.new_tag("span")
 published_now = datetime.datetime.utcnow()
-timestamp.string = f"Last updated on {published_now.isoformat()}"
-footer.append(timestamp)
-years_walk = next(os.walk(os.path.abspath("posts/")))
-years = years_walk[1]
-for year in sorted(years, reverse=True):
-    posts_walk = next(os.walk(os.path.abspath(f"posts/{year}")))
-    posts = sorted(posts_walk[-1])
-    for post in reversed(posts):        
-        if post.endswith(".swp"):
-            continue
-        item = etree.SubElement(channel, 'item')
-        author = etree.SubElement(channel, 'author')
-        author.text = "jermnelson@gmail.com"
-        div_container = index.new_tag("div")
-        div_container['class'] = "blog-post"
-        blog_ident = f"{year}/{post[0:5]}"
-        link = etree.SubElement(item, "link")
-        link.text = f"{BLOG_URI}/{blog_ident}.html"
-        blog_date = datetime.datetime.strptime(blog_ident, "0%Y/%m-%d")
-        blog_label = f"{post[0:5]}-{year}"
-        
-        pubDate = etree.SubElement(item,'pubDate')
-        pubDate.text = f"{year}-{post[0:5]}"
-        blog_date = index.new_tag("h2", id=blog_ident)
-        blog_date.string = blog_label
-        li_blog = index.new_tag("li")
-        li_blog_a = index.new_tag("a", href=f"#{blog_ident}")
-     
-        li_blog_a.string = blog_label
-        li_blog.append(li_blog_a)
-        latest.append(li_blog)
-        div_container.append(blog_date)
-        post_html = get_post_md(year, post)
-        post_soup = BeautifulSoup(post_html, features="html.parser")
-        body = post_soup.find('body')
-        #breakpoint()
-        if body is None:
-            h1 = post_soup.find('h1')
-        else:
-            h1 = body.find('h1')
-        title = etree.SubElement(item, "title")
-        title.text = h1.string
-        #breakpoint()
-        if body is None:
-            copy_soup = copy.deepcopy(post_soup)
-            item.append(etree.fromstring(f"<description>{copy_soup}</description>"))
-            div_container.append(copy_soup)
-        else:
-            div_container.append(body)
-            item.append(etree.fromstring(f"<description>{body}</description>"))
-        postings.append(div_container)
+#timestamp.string = f"Last updated on {published_now.isoformat()}"
+#footer.append(timestamp)
+years = [year for year in pathlib.Path("posts").glob("02*")]
+#breakpoint()
+
+year_blog(years)
 
 with open("rss.xml", "wb+") as fo:
    fo.write(etree.tostring(rss_xml)) 
     
-with open("index.html", "w+") as fo:
-    fo.write(index.prettify())
+#with open("index.html", "w+") as fo:
+#    fo.write(index.prettify())
