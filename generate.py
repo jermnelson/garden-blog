@@ -16,7 +16,7 @@ def absolute_urls(elements):
         element['src'] = f"{BLOG_URI}{element['src']}"
 
 def get_post_md(year, post_file):
-    post_path = os.path.abspath(f"posts/{year}/{post_file}") 
+    post_path = pathlib.Path(f"posts/{year}/{post_file}") 
     with open(post_path) as fo:
         post_html = markdown.markdown(fo.read())
     return post_html
