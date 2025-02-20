@@ -58,7 +58,7 @@ postings = index.find("div", class_="postings")
 latest = index.find("ul", class_="latest")
 footer = index.find("footer")
 timestamp = index.new_tag("span")
-published_now = datetime.datetime.utcnow()
+published_now = datetime.datetime.now(datetime.UTC)
 timestamp.string = f"Last updated on {published_now.isoformat()}"
 footer.append(timestamp)
 years_walk = next(os.walk(os.path.abspath("posts/")))
