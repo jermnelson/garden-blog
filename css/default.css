@@ -23,6 +23,27 @@ a.button:link, a.button:visited {
   color: rgb(109, 59, 34)
 }
 
+div.post_nav {
+  background-image: url("../img/wood-background.png");
+  border: 2px solid black;
+  border-radius: 15px;
+  color: white;
+  margin: 1.25em;
+  padding: .75em;
+  width: 50%;
+}
+
+div.post_nav a:link, a:visited {
+  color: white;
+}
+
+div.nav {
+  margin-top: 1em; 
+  margin-bottom: .5em; 
+  margin-left: 45em; 
+  width: 90%;
+}
+
 div.title {
   background-color: #d4ba97;
   background-image: url("../img/wood-background.png");
@@ -31,6 +52,8 @@ div.title {
   color: white;
   width: 85%;
 }
+
+
 
 h1.title {
  font-size: 4em;

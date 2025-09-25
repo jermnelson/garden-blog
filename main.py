@@ -1,3 +1,4 @@
+import datetime
 import pathlib
 
 from js import console
@@ -17,21 +18,55 @@ app.install_router(Router, link_mode=Router.LINK_MODE_HASH)
 class BlogPost(Page):
     props = ["year", "post_id"]
 
+    def post_nav(self):
+        with t.div(class_name="post_nav"):
+            t.a(
+                f"Home",
+                href="/"
+            )
+            t.span(" >> ")
+            t.a(
+                f"{self.year}",
+                href=f"/#posts/{self.year}"
+            )
+            t.span(f" >> {self.post_id}")
+
+
     def populate(self):
         post_path = pathlib.Path(f"{self.year}/{self.post_id}.md")
         if not post_path.exists():
             raise NotFound()
         t.blog_header()
+
         with t.div(class_name="wrapper"):
             with t.div(class_name="postings"):
                 t.blog_post(post_md=post_path)
-            # t.post_listing(year=self.year)
+            with t.div(class_name="listing"):
+                self.post_nav()
         t.blog_footer()
 
 
 @app.page("/posts/<year>")
 class YearBlogPosts(Page):
     props = ["year"]
+
+    def nav_buttons(self):
+        current_date = datetime.datetime.now(datetime.UTC)
+        year = int(self.year)
+        with t.div(class_name="nav"):
+            if year < current_date.year:
+                t.a(
+                    f"<< Next Year",
+                    class_name="button",
+                    href=f"/#posts/0{year+1}"
+                )
+            if year > 2019:
+                t.a(
+                    f"Prior Year >>",
+                    class_name="button",
+                    href=f"/#posts/0{year-1}"
+                )
+
 
     def populate(self):
         posts = []
@@ -50,6 +85,7 @@ class YearBlogPosts(Page):
                 for post in posts:
                     t.blog_post(post_md=post)
             t.post_listing(year=self.year, posts=posts)
+        self.nav_buttons()
         t.blog_footer()
 
 
@@ -64,7 +100,7 @@ class BlogHome(Page):
                 for post in sorted(current_year_posts["posts"], reverse=True):
                     t.blog_post(post_md=post)
             t.post_listing()
-        with t.div(style="margin-botton: .5em;"):
+        with t.div(class_name="nav"):
             t.a(
                 f"Prior Year >>",
                 class_name="button",
