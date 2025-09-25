@@ -58,13 +58,13 @@ class YearBlogPosts(Page):
                 t.a(
                     f"<< Next Year",
                     class_name="button",
-                    href=f"/#posts/0{year+1}"
+                    href=f"/garden-blog/#posts/0{year+1}"
                 )
             if year > 2019:
                 t.a(
                     f"Prior Year >>",
                     class_name="button",
-                    href=f"/#posts/0{year-1}"
+                    href=f"/garden-blog/#posts/0{year-1}"
                 )
 
 

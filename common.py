@@ -75,7 +75,7 @@ class PostListing(Component):
             year = f"0{year}"
         return t.a(
             post_name,
-            href=f"/#posts/{year}/{post_name}"
+            href=f"/garden-blog/#posts/{year}/{post_name}"
         )
 
     def single_year(self):
