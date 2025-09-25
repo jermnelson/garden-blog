@@ -22,7 +22,7 @@ class BlogPost(Page):
         with t.div(class_name="post_nav"):
             t.a(
                 f"Home",
-                href="/"
+                href="/garden-blog/"
             )
             t.span(" >> ")
             t.a(
