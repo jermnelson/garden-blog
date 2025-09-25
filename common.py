@@ -92,7 +92,7 @@ class PostListing(Component):
                     with t.li(class_name="year"):
                         t.a(
                             str(row["year"]), 
-                            href=f"/#posts/0{row['year']}"
+                            href=f"/garden-blog/#posts/0{row['year']}"
                         )
                     for post in sorted(row["posts"], reverse=True):
                         with t.li():

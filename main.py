@@ -27,7 +27,7 @@ class BlogPost(Page):
             t.span(" >> ")
             t.a(
                 f"{self.year}",
-                href=f"/#posts/{self.year}"
+                href=f"/garden-blog/#posts/{self.year}"
             )
             t.span(f" >> {self.post_id}")
 
@@ -104,7 +104,7 @@ class BlogHome(Page):
             t.a(
                 f"Prior Year >>",
                 class_name="button",
-                href=f"/#posts/0{current_year_posts['year']-1}"
+                href=f"/garden-blog/#posts/0{current_year_posts['year']-1}"
             )
             t.br()
         t.blog_footer()
