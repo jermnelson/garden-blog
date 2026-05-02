@@ -3,8 +3,8 @@ name = "garden-reflections-blog"
 version = "0.1.0"
 description = "Jeremy Nelson's Garden Reflection blog."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 dependencies = [
-    "beautifulsoup4>=4.14.3",
+    "bs4>=0.0.2",
     "markdown>=3.10.2",
 ]
