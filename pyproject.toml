@@ -1,0 +1,10 @@
+[project]
+name = "garden-reflections-blog"
+version = "0.1.0"
+description = "Jeremy Nelson's Garden Reflection blog."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "markdown>=3.10.2",
+]
