@@ -122,6 +122,19 @@ li.year {
   width: 80%;
 }
 
+.semantic-table {
+  border-collapse: collapse;
+}
+
+.semantic-table tr td {
+  border: 1px solid black;
+}
+
+
+.thumbnail {
+  width: 75px;
+}
+
 .wrapper {
  display: grid;
  grid-template-columns: 70% 30%;

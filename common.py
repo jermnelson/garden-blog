@@ -58,7 +58,7 @@ class BlogPost(Component):
         
     def populate(self):
         year = self.post_md.parent.name
-        self.raw_html = markdown.markdown(self.post_md.read_text())
+        self.raw_html = markdown.markdown(self.post_md.read_text(), extensions=['tables'])
         self.id = f"{year}/{self.post_md.stem}"
         self.post_date = f"{self.post_md.stem}-{year}"
         with t.div(class_name="blog-post"):
